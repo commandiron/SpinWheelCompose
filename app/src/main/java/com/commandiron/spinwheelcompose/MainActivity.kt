@@ -7,10 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,8 +20,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SpinWheelComposeTheme {
-                var isSpinning by remember { mutableStateOf(false)}
-                var resultDegree by remember { mutableStateOf(0f)}
+                var isSpinning by remember { mutableStateOf(false) }
+                var resultDegree by remember { mutableStateOf(0f) }
+                LaunchedEffect(key1 = isSpinning){
+                    if(!isSpinning){
+                        resultDegree = Random().nextInt(360).toFloat()
+                    }
+                }
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -35,15 +37,8 @@ class MainActivity : ComponentActivity() {
                     DefaultSpinWheel(
                         isSpinning = isSpinning,
                         resultDegree = resultDegree,
-                        onClick = {
-                            if(!isSpinning){
-                                resultDegree = Random().nextInt(360).toFloat()
-                            }
-                            isSpinning = !isSpinning
-                        },
-                        onFinish = {
-                            isSpinning = false
-                        }
+                        onClick = { isSpinning = !isSpinning },
+                        onFinish = { isSpinning = false }
                     )
                 }
             }
