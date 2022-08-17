@@ -3,7 +3,7 @@
 SpinWheel in Android using Jetpack Compose.
 
 ## How it looks
-<img src="art/spinwheel_gif.gif" width="250" height="530">
+<img src="art/spinwheel_gif.gif" width="250" height="530"><img src="https://user-images.githubusercontent.com/50905347/185155369-3632aecb-0145-408c-a0b8-ad34865d1050.png" width="250" height="530">
 
 ## Usage - Example
 ```kotlin  
@@ -23,8 +23,6 @@ DefaultSpinWheel(
     Text(text = textList[pieIndex])
 }
 ```
-## Variants
-
 ## Setup
 1. Open the file `settings.gradle` (it looks like that)
 ```groovy
