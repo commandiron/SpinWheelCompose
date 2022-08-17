@@ -17,7 +17,7 @@ DefaultSpinWheel(
         isSpinning = !isSpinning
     },
     onFinish = {
-        isSpinning = !isSpinning
+        isSpinning = false
     }
 )
 ```
