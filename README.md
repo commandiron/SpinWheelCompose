@@ -19,8 +19,8 @@ DefaultSpinWheel(
     resultDegree = resultDegree,
     onClick = { isSpinning = !isSpinning },
     onFinish = { isSpinning = false }
-){
-    Text(text = textList[it])
+){ pieIndex ->
+    Text(text = textList[pieIndex])
 }
 ```
 ## Setup
