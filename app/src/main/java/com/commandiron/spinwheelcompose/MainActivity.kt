@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                             isSpinning = !isSpinning
                         },
                         onFinish = {
-                            isSpinning = !isSpinning
+                            isSpinning = false
                         }
                     )
                 }
