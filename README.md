@@ -1,4 +1,5 @@
-# SpinwheelCompose
+# SpinwheelCompose[![](https://jitpack.io/v/commandiron/SpinWheelCompose.svg)](https://jitpack.io/#commandiron/SpinWheelCompose)
+
 SpinWheel in Android using Jetpack Compose.
 
 ## How it looks
