@@ -12,7 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.commandiron.spin_wheel_compose.SpinWheel
+import com.commandiron.spin_wheel_compose.DefaultSpinWheel
 import com.commandiron.spinwheelcompose.ui.theme.SpinWheelComposeTheme
 import java.util.*
 
@@ -23,16 +23,17 @@ class MainActivity : ComponentActivity() {
             SpinWheelComposeTheme {
                 var isSpinning by remember { mutableStateOf(false)}
                 var resultDegree by remember { mutableStateOf(0f)}
-                println(resultDegree)
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    SpinWheel(
+                    DefaultSpinWheel(
                         isSpinning = isSpinning,
                         onClick = {
-                            resultDegree = Random().nextInt(360).toFloat()
+                            if(!isSpinning){
+                                resultDegree = Random().nextInt(360).toFloat()
+                            }
                             isSpinning = !isSpinning
                         },
                         onFinish = {

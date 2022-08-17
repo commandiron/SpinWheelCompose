@@ -23,17 +23,16 @@ fun SpinWheelContent(
     titleTextStyle: TextStyle,
 ) {
     val pieAngle = 360f / pieCount
-    val startAngleOffset = 180
+    val startOffset = 90
+    val radius = (spinSize.value / 2)
+    val pieRadius = getPieRadius(pieCount, radius)
     Box(
         modifier = modifier
             .size(spinSize),
         contentAlignment = Alignment.Center
     ){
-        val radius = (spinSize.value / 2)
-        val textAngleOffset = 90
         for(i in 0 until pieCount){
-            val startAngle = pieAngle * i - textAngleOffset + startAngleOffset + rotationDegree + pieAngle / 2
-            val pieRadius = getPieRadius(pieCount, radius)
+            val startAngle = pieAngle * i + startOffset + rotationDegree + pieAngle / 2
             val offsetX = -(pieRadius * sin(Math.toRadians(startAngle.toDouble()))).toFloat()
             val offsetY = (pieRadius * cos(Math.toRadians(startAngle.toDouble()))).toFloat()
             val title = titleList.getOrElse(i){ "" }

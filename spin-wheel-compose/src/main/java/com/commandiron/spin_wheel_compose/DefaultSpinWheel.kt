@@ -11,18 +11,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SpinWheel(
+fun DefaultSpinWheel(
     modifier: Modifier = Modifier,
-    spinSize: Dp = 240.dp,
+    size: Dp = 240.dp,
     @IntRange(from = 2, to = 8) pieCount: Int = 8,
-    titleList: List<String> = listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4"),
+    titleList: List<String> = listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4", "Pie 5", "Pie 6", "Pie 7", "Pie 8"),
     titleTextStyle: TextStyle = MaterialTheme.typography.labelSmall,
-    borderWidth: Dp = 10.dp,
-    borderColor: Color = Color(0xFF941c2f),
+    selectorWidth: Dp = 12.dp,
+    selectorColor: Color = Color(0xFFFF0000),
+    frameWidth: Dp = 10.dp,
+    frameColor: Color = Color(0xFF941c2f),
     dividerColor: Color = Color.White,
-    durationMillis: Int = 5000,
+    durationMillis: Int = 12000,
     delayMillis: Int = 0,
-    rotationPerSecond: Int = 5,
+    rotationPerSecond: Float = 1f,
     startDegree: Float = 0f,
     resultDegree: Float = 0f,
     easing: Easing = CubicBezierEasing(0.16f, 1f, 0.3f, 1f),
@@ -33,12 +35,14 @@ fun SpinWheel(
 ) {
     AnimatedSpinWheel(
         modifier = modifier,
-        spinSize = spinSize,
+        size = size,
         pieCount = pieCount,
         titleList = titleList,
         titleTextStyle = titleTextStyle,
-        borderWidth = borderWidth,
-        borderColor = borderColor,
+        selectorWidth = selectorWidth,
+        selectorColor = selectorColor,
+        frameWidth = frameWidth,
+        frameColor = frameColor,
         dividerColor = dividerColor,
         durationMillis = durationMillis,
         delayMillis = delayMillis,
