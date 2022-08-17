@@ -3,7 +3,7 @@
 SpinWheel in Android using Jetpack Compose.
 
 ## How it looks
-<img src="art/spinwheel_gif.gif" width="250" height="530"><img src="https://user-images.githubusercontent.com/50905347/185155369-3632aecb-0145-408c-a0b8-ad34865d1050.png" width="250" height="530">
+<img src="art/spinwheel_gif.gif" width="250" height="530"><img src="https://user-images.githubusercontent.com/50905347/185155496-2b340a25-6d94-479c-bbfa-ad07459f436b.png" width="250" height="530">
 
 ## Usage - Example
 ```kotlin  
