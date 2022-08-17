@@ -6,19 +6,20 @@ Spinwheel in Android using Jetpack Compose.
 
 ## Usage
 ```kotlin  
-BubbleNavigationBar{
-    navigationItems.forEach { navigationItem ->
-        BubbleNavigationBarItem(
-            selected = currentRoute == navigationItem.route,
-            onClick = {
-                //Navigate
-            },
-            icon = navigationItem.icon,
-            title = navigationItem.title,
-            selectedColor = navigationItem.selectedColor
-        )
+var isSpinning by remember { mutableStateOf(false)}
+DefaultSpinWheel(
+    isSpinning = isSpinning,
+    resultDegree = resultDegree,
+    onClick = {
+        if(!isSpinning){
+            resultDegree = Random().nextInt(360).toFloat()
+        }
+        isSpinning = !isSpinning
+    },
+    onFinish = {
+        isSpinning = !isSpinning
     }
-}
+)
 ```
 
 ## Setup
