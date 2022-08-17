@@ -3,3 +3,7 @@
 Spinwheel in Android using Jetpack Compose.
 
 ## How it looks
+
+## Usage
+
+## Setup
