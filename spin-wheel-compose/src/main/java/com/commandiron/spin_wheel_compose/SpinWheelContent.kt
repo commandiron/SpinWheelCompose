@@ -2,6 +2,7 @@ package com.commandiron.spin_wheel_compose
 
 import androidx.annotation.IntRange
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -17,10 +18,9 @@ import kotlin.math.sin
 internal fun SpinWheelContent(
     modifier: Modifier = Modifier,
     spinSize: Dp,
-    titleList: List<String>,
-    titleTextStyle: TextStyle,
     @IntRange(from = 2, to = 8) pieCount: Int,
-    rotationDegree: Float
+    rotationDegree: Float,
+    content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ) {
     val pieAngle = 360f / pieCount
     val startOffset = 90
@@ -31,18 +31,17 @@ internal fun SpinWheelContent(
             .size(spinSize),
         contentAlignment = Alignment.Center
     ){
-        for(i in 0 until pieCount){
-            val startAngle = pieAngle * i + startOffset + rotationDegree + pieAngle / 2
+        for(pieIndex in 0 until pieCount){
+            val startAngle = pieAngle * pieIndex + startOffset + rotationDegree + pieAngle / 2
             val offsetX = -(pieRadius * sin(Math.toRadians(startAngle.toDouble()))).toFloat()
             val offsetY = (pieRadius * cos(Math.toRadians(startAngle.toDouble()))).toFloat()
-            val title = titleList.getOrElse(i){ "" }
             Box(
                 modifier = Modifier
                     .size(getPieBoxSize(pieCount, spinSize))
                     .offset(x = Dp(offsetX), y = Dp(offsetY)),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = title, style = titleTextStyle)
+                content(pieIndex)
             }
         }
     }

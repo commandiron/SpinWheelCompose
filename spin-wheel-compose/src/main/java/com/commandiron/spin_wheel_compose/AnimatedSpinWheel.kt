@@ -3,6 +3,7 @@ package com.commandiron.spin_wheel_compose
 import androidx.annotation.IntRange
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -17,8 +18,6 @@ import kotlinx.coroutines.launch
 internal fun AnimatedSpinWheel(
     modifier: Modifier,
     size: Dp,
-    titleList: List<String>,
-    titleTextStyle: TextStyle,
     @IntRange(from = 2, to = 8) pieCount: Int,
     frameWidth: Dp,
     frameColor: Color,
@@ -33,7 +32,8 @@ internal fun AnimatedSpinWheel(
     startDegree: Float,
     resultDegree: Float,
     onClick: () -> Unit,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
+    content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ){
     val rotationDegree = remember {
         Animatable(startDegree)
@@ -92,11 +92,11 @@ internal fun AnimatedSpinWheel(
                 SpinWheelContent(
                     modifier = modifier,
                     spinSize = size - frameWidth - selectorWidth,
-                    titleList = titleList,
-                    titleTextStyle = titleTextStyle,
                     pieCount = pieCount,
                     rotationDegree = rotationDegree.value
-                )
+                ){
+                    content(it)
+                }
             }
         }
     }
