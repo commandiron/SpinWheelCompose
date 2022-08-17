@@ -6,7 +6,7 @@ Spinwheel in Android using Jetpack Compose.
 
 ## Usage
 ```kotlin  
-var isSpinning by remember { mutableStateOf(false)}
+var isSpinning by remember { mutableStateOf(false) }
 DefaultSpinWheel(
     isSpinning = isSpinning,
     resultDegree = resultDegree,
