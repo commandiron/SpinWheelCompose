@@ -23,6 +23,8 @@ DefaultSpinWheel(
     Text(text = textList[pieIndex])
 }
 ```
+## Variants
+
 ## Setup
 1. Open the file `settings.gradle` (it looks like that)
 ```groovy
