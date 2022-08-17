@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 
 @Composable
-fun SpinWheelPies(
+internal fun SpinWheelPies(
     modifier: Modifier = Modifier,
     spinSize: Dp,
     @IntRange(from = 2, to = 8) pieCount: Int,

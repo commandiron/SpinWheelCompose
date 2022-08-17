@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.Dp
 import kotlinx.coroutines.launch
 
 @Composable
-fun AnimatedSpinWheel(
+internal fun AnimatedSpinWheel(
     modifier: Modifier,
     size: Dp,
     titleList: List<String>,

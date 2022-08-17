@@ -23,7 +23,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun SpinWheelFrame(
+internal fun SpinWheelFrame(
     modifier: Modifier = Modifier,
     frameSize: Dp,
     @IntRange(from = 2, to = 8) pieCount: Int,

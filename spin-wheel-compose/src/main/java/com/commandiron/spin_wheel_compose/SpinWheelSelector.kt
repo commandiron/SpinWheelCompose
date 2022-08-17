@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.Dp
 
 @Composable
-fun SpinWheelSelector(
+internal fun SpinWheelSelector(
     modifier: Modifier = Modifier,
     frameSize: Dp,
     @IntRange(from = 2, to = 8) pieCount: Int,

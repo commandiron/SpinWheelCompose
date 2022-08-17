@@ -14,7 +14,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun SpinWheelContent(
+internal fun SpinWheelContent(
     modifier: Modifier = Modifier,
     spinSize: Dp,
     titleList: List<String>,
