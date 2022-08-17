@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.Dp
 fun SpinWheelSelector(
     modifier: Modifier = Modifier,
     frameSize: Dp,
-    selectorWidth: Dp,
     @IntRange(from = 2, to = 8) pieCount: Int,
-    rotationDegree: Float,
+    selectorWidth: Dp,
     selectorColor: Color,
+    rotationDegree: Float,
     spinWheelFrame: @Composable BoxScope.() -> Unit
 ) {
     Box(

@@ -19,7 +19,6 @@ fun SpinWheelPies(
     spinSize: Dp,
     @IntRange(from = 2, to = 8) pieCount: Int,
     rotationDegree: Float,
-    onClickEnabled: Boolean,
     onClick: () -> Unit,
     spinWheelContent: @Composable BoxScope.() -> Unit
 ) {
@@ -32,7 +31,6 @@ fun SpinWheelPies(
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
-                    enabled = onClickEnabled,
                     onClick = onClick
                 )
         ){

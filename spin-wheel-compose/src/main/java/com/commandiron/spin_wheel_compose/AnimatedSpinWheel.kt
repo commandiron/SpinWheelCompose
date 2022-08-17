@@ -3,34 +3,35 @@ package com.commandiron.spin_wheel_compose
 import androidx.annotation.IntRange
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import kotlinx.coroutines.launch
 
 @Composable
 fun AnimatedSpinWheel(
     modifier: Modifier,
     size: Dp,
-    @IntRange(from = 2, to = 8) pieCount: Int,
     titleList: List<String>,
     titleTextStyle: TextStyle,
-    selectorWidth: Dp,
-    selectorColor: Color,
+    @IntRange(from = 2, to = 8) pieCount: Int,
     frameWidth: Dp,
     frameColor: Color,
     dividerColor: Color,
+    selectorWidth: Dp,
+    selectorColor: Color,
+    isSpinning: Boolean,
     durationMillis: Int,
     delayMillis: Int,
     rotationPerSecond: Float,
+    easing: Easing,
     startDegree: Float,
     resultDegree: Float,
-    easing: Easing,
-    isSpinning: Boolean,
-    onClickEnabled: Boolean,
     onClick: () -> Unit,
     onFinish: () -> Unit
 ){
@@ -41,11 +42,12 @@ fun AnimatedSpinWheel(
     var animationResult by remember {
         mutableStateOf<AnimationResult<Float, AnimationVector1D>?>(null)
     }
-
     LaunchedEffect(isSpinning){
         if(isSpinning){
+            val targetValue = 360f * rotationPerSecond * (durationMillis / 1000) + resultDegree
+            println(targetValue)
             animationResult = rotationDegree.animateTo(
-                targetValue = 360f * rotationPerSecond * (durationMillis / 1000) + resultDegree,
+                targetValue = targetValue,
                 animationSpec = tween(
                     durationMillis = durationMillis,
                     delayMillis = delayMillis,
@@ -63,42 +65,37 @@ fun AnimatedSpinWheel(
         }
     }
     SpinWheelSelector(
+        modifier = modifier,
         frameSize = size,
-        selectorWidth = selectorWidth,
         pieCount = pieCount,
-        rotationDegree = rotationDegree.value,
-        selectorColor = selectorColor
+        selectorWidth = selectorWidth,
+        selectorColor = selectorColor,
+        rotationDegree = rotationDegree.value
     ) {
         SpinWheelFrame(
-            modifier = modifier.pointerInput(Unit){
-                detectDragGestures { change, dragAmount ->
-                    println(change)
-                }
-            },
+            modifier = modifier,
             frameSize = size - selectorWidth,
             pieCount = pieCount,
-            rotationDegree = rotationDegree.value,
-            onClickEnabled = onClickEnabled,
-            onClick = onClick,
             frameWidth = frameWidth,
             frameColor = frameColor,
-            dividerColor =  dividerColor
+            dividerColor =  dividerColor,
+            rotationDegree = rotationDegree.value,
+            onClick = onClick,
         ) {
             SpinWheelPies(
                 modifier = modifier,
                 spinSize = size - frameWidth - selectorWidth,
                 pieCount = pieCount,
                 rotationDegree = rotationDegree.value,
-                onClickEnabled = onClickEnabled,
                 onClick = onClick
             ){
                 SpinWheelContent(
                     modifier = modifier,
                     spinSize = size - frameWidth - selectorWidth,
-                    pieCount = pieCount,
-                    rotationDegree = rotationDegree.value,
                     titleList = titleList,
-                    titleTextStyle = titleTextStyle
+                    titleTextStyle = titleTextStyle,
+                    pieCount = pieCount,
+                    rotationDegree = rotationDegree.value
                 )
             }
         }

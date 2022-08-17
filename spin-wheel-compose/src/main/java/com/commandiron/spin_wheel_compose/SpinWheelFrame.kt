@@ -27,11 +27,10 @@ fun SpinWheelFrame(
     modifier: Modifier = Modifier,
     frameSize: Dp,
     @IntRange(from = 2, to = 8) pieCount: Int,
-    rotationDegree: Float,
     frameWidth: Dp,
     frameColor: Color,
     dividerColor: Color,
-    onClickEnabled: Boolean,
+    rotationDegree: Float,
     onClick: () -> Unit,
     spinWheel: @Composable BoxScope.() -> Unit
 ) {
@@ -45,7 +44,6 @@ fun SpinWheelFrame(
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
-                    enabled = onClickEnabled,
                     onClick = onClick
                 )
         ){

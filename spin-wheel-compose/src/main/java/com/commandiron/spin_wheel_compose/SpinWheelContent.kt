@@ -17,10 +17,10 @@ import kotlin.math.sin
 fun SpinWheelContent(
     modifier: Modifier = Modifier,
     spinSize: Dp,
-    @IntRange(from = 2, to = 8) pieCount: Int,
-    rotationDegree: Float,
     titleList: List<String>,
     titleTextStyle: TextStyle,
+    @IntRange(from = 2, to = 8) pieCount: Int,
+    rotationDegree: Float
 ) {
     val pieAngle = 360f / pieCount
     val startOffset = 90
