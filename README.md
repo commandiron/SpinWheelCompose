@@ -7,15 +7,15 @@ Spinwheel in Android using Jetpack Compose.
 ## Usage
 ```kotlin  
 var isSpinning by remember { mutableStateOf(false) }
+LaunchedEffect(key1 = isSpinning){
+    if(!isSpinning){
+        resultDegree = Random().nextInt(360).toFloat()
+    }
+}
 DefaultSpinWheel(
     isSpinning = isSpinning,
     resultDegree = resultDegree,
-    onClick = {
-        if(!isSpinning){
-            resultDegree = Random().nextInt(360).toFloat()
-        }
-        isSpinning = !isSpinning
-    },
+    onClick = { isSpinning = !isSpinning },
     onFinish = { isSpinning = false }
 )
 ```
