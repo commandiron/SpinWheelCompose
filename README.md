@@ -58,34 +58,43 @@ val iconList by remember {
     )
 }
 var isSpinning by remember { mutableStateOf(false)}
-DefaultSpinWheel(
-    dimensions = SpinWheelDefaults.spinWheelDimensions(
-        spinWheelSize = 180.dp,
-        frameWidth = 40.dp,
-        selectorWidth = 24.dp
-    ),
-    colors = SpinWheelDefaults.spinWheelColors(
-        frameColor = Color(0xFF370617),
-        dividerColor = Color.White,
-        selectorColor = Color(0xFFd00000)
-    ),
-    animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
-        pieCount = 4,
-        durationMillis = 3000,
-        delayMillis = 200,
-        rotationPerSecond = 2f,
-        easing = FastOutLinearInEasing,
-        startDegree = 90f
-    ),
-    isSpinning = isSpinning,
-    onClick = { isSpinning = !isSpinning },
-    onFinish = { isSpinning = false }
-){ pieIndex ->
-    Icon(
-        imageVector = iconList[pieIndex],
-        tint = Color.White,
-        contentDescription = null
-    )
+repeat(3){
+    DefaultSpinWheel(
+        dimensions = SpinWheelDefaults.spinWheelDimensions(
+            spinWheelSize = 180.dp,
+            frameWidth = 20.dp,
+            selectorWidth = 10.dp
+        ),
+        colors = SpinWheelDefaults.spinWheelColors(
+            frameColor = Color(0xFF403d39),
+            dividerColor = Color(0xFFfffcf2),
+            selectorColor = Color(0xFFdc0073),
+            pieColors = listOf(
+                Color(0xFFdabfff),
+                Color(0xFF907ad6),
+                Color(0xFF4f518c),
+                Color(0xFF2c2a4a)
+            )
+        ),
+        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
+            pieCount = 4,
+            durationMillis = 4000,
+            delayMillis = 200,
+            rotationPerSecond = 2f,
+            easing = LinearOutSlowInEasing,
+            startDegree = 90f
+        ),
+        isSpinning = isSpinning,
+        onClick = { isSpinning = !isSpinning },
+        onFinish = { isSpinning = false }
+    ){ pieIndex ->
+        Icon(
+            imageVector = iconList[pieIndex],
+            tint = Color.White,
+            contentDescription = null
+        )
+    }
+    Spacer(modifier = Modifier.height(32.dp))
 }
 ```   
 </td>
