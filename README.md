@@ -91,7 +91,7 @@ DefaultSpinWheel(
 </td>
 <td>
             
-<img src="art/spinwheel_gif.gif" width="250" height="530">
+<img src="https://user-images.githubusercontent.com/50905347/185386346-082e5adc-0a55-4619-8581-ff5c4c1d4a37.png" width="250" height="530">
     
 </td>
 </tr>
