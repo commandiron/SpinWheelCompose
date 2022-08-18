@@ -36,6 +36,63 @@ dependencyResolutionManagement {
 3. Add dependency
 ```groovy
 dependencies {
-        implementation 'com.github.commandiron:SpinWheelCompose:1.0'
+        implementation 'com.github.commandiron:SpinWheelCompose:1.0.2'
 }
 ```
+
+## Features
+
+<table>
+<tr>
+<td>
+            
+```kotlin  
+val iconList by remember {
+    mutableStateOf(
+        listOf(
+            Icons.Default.Star,
+            Icons.Default.Star,
+            Icons.Default.Star,
+            Icons.Default.Star,
+        )
+    )
+}
+var isSpinning by remember { mutableStateOf(false)}
+DefaultSpinWheel(
+    dimensions = SpinWheelDefaults.spinWheelDimensions(
+        spinWheelSize = 180.dp,
+        frameWidth = 40.dp,
+        selectorWidth = 24.dp
+    ),
+    colors = SpinWheelDefaults.spinWheelColors(
+        frameColor = Color(0xFF370617),
+        dividerColor = Color.White,
+        selectorColor = Color(0xFFd00000)
+    ),
+    animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
+        pieCount = 4,
+        durationMillis = 3000,
+        delayMillis = 200,
+        rotationPerSecond = 2f,
+        easing = FastOutLinearInEasing,
+        startDegree = 90f
+    ),
+    isSpinning = isSpinning,
+    onClick = { isSpinning = !isSpinning },
+    onFinish = { isSpinning = false }
+){ pieIndex ->
+    Icon(
+        imageVector = iconList[pieIndex],
+        tint = Color.White,
+        contentDescription = null
+    )
+}
+```   
+</td>
+<td>
+            
+<img src="https://user-images.githubusercontent.com/50905347/185386346-082e5adc-0a55-4619-8581-ff5c4c1d4a37.png" width="250" height="530">
+    
+</td>
+</tr>
+</table>
