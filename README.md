@@ -36,6 +36,6 @@ dependencyResolutionManagement {
 3. Add dependency
 ```groovy
 dependencies {
-        implementation 'com.github.commandiron:SpinWheelCompose:TAG'
+        implementation 'com.github.commandiron:SpinWheelCompose:Tag'
 }
 ```
