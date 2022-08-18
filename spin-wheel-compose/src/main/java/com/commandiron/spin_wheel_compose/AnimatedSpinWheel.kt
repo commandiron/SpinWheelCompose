@@ -23,13 +23,13 @@ internal fun AnimatedSpinWheel(
     dividerColor: Color,
     selectorWidth: Dp,
     selectorColor: Color,
-    isSpinning: Boolean,
     @IntRange(from = 2, to = 8) pieCount: Int,
     durationMillis: Int,
     delayMillis: Int,
     rotationPerSecond: Float,
     easing: Easing,
     startDegree: Float,
+    isSpinning: Boolean,
     resultDegree: Float,
     onClick: () -> Unit,
     onFinish: () -> Unit,
@@ -43,9 +43,8 @@ internal fun AnimatedSpinWheel(
         mutableStateOf<AnimationResult<Float, AnimationVector1D>?>(null)
     }
     LaunchedEffect(isSpinning){
-        if(isSpinning){
+        while (isSpinning) {
             val targetValue = 360f * rotationPerSecond * (durationMillis / 1000) + resultDegree
-            println(targetValue)
             animationResult = rotationDegree.animateTo(
                 targetValue = targetValue,
                 animationSpec = tween(
@@ -54,13 +53,14 @@ internal fun AnimatedSpinWheel(
                     easing = easing
                 )
             )
+            rotationDegree.snapTo(resultDegree)
             animationResult?.let {
                 if(it.endReason.name == "Finished"){
-                    rotationDegree.snapTo(resultDegree)
                     onFinish()
                 }
             }
-        }else{
+        }
+        if(!isSpinning){
             rotationDegree.snapTo(resultDegree)
         }
     }

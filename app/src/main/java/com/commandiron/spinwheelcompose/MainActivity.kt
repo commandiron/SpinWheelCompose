@@ -30,23 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SpinWheelComposeTheme {
-                var isSpinning by remember { mutableStateOf(false) }
-                var resultDegree by remember { mutableStateOf(0f) }
                 val textList by remember { mutableStateOf(listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4", "Pie 5", "Pie 6", "Pie 7", "Pie 8"))}
-                val iconList by remember { mutableStateOf(listOf(
-                    Icons.Default.Settings,
-                    Icons.Default.List,
-                    Icons.Default.Create,
-                    Icons.Default.Add
-                )) }
-                LaunchedEffect(key1 = isSpinning){
-                    if(!isSpinning){
-                        resultDegree = Random().nextInt(360).toFloat()
-                    }
-                }
-                Button(onClick = { /*TODO*/ }) {
-
-                }
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -54,40 +38,9 @@ class MainActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    DefaultSpinWheel(
-                        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
-                            pieCount = 4,
-                            resultDegree = resultDegree
-                        ),
-                        isSpinning = isSpinning,
-                        onClick = { isSpinning = !isSpinning },
-                        onFinish = { isSpinning = false }
-                    ){ pieIndex ->
-                        Icon(imageVector = iconList[pieIndex], contentDescription = null)
+                    DefaultSpinWheel(isSpinning = true){ pieIndex ->
+                        Text(text = textList[pieIndex])
                     }
-                    Spacer(modifier = Modifier.height(32.dp))
-                    DefaultSpinWheel(
-                        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
-                            pieCount = 8,
-                            resultDegree = resultDegree
-                        ),
-                        isSpinning = isSpinning,
-                        onClick = { isSpinning = !isSpinning },
-                        onFinish = { isSpinning = false }
-                    ){ pieIndex ->
-                        Image(painter = painterResource(id = R.drawable.ic_launcher_foreground), contentDescription = null)
-                    }
-//                    Spacer(modifier = Modifier.height(32.dp))
-//                    DefaultSpinWheel(
-//                        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
-//                            resultDegree = resultDegree
-//                        ),
-//                        isSpinning = isSpinning,
-//                        onClick = { isSpinning = !isSpinning },
-//                        onFinish = { isSpinning = false }
-//                    ){ pieIndex ->
-//                        Text(text = textList[pieIndex])
-//                    }
                 }
             }
         }
