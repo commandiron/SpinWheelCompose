@@ -60,14 +60,14 @@ val iconList by remember {
 var isSpinning by remember { mutableStateOf(false)}
 DefaultSpinWheel(
     dimensions = SpinWheelDefaults.spinWheelDimensions(
-        spinWheelSize = 240.dp,
-        frameWidth = 20.dp,
-        selectorWidth = 12.dp
+        spinWheelSize = 180.dp,
+        frameWidth = 40.dp,
+        selectorWidth = 24.dp
     ),
     colors = SpinWheelDefaults.spinWheelColors(
-        frameColor = Color(0xFF5B5B5B),
+        frameColor = Color(0xFF370617),
         dividerColor = Color.White,
-        selectorColor = Color(0xFF000000)
+        selectorColor = Color(0xFFd00000)
     ),
     animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
         pieCount = 4,
