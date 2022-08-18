@@ -42,6 +42,10 @@ dependencies {
 
 ## Features
 
+<table>
+<tr>
+<td>
+            
 ```kotlin  
 val iconList by remember {
     mutableStateOf(
@@ -83,6 +87,12 @@ DefaultSpinWheel(
         contentDescription = null
     )
 }
-```
-
-### Result
+```   
+</td>
+<td>
+            
+<img src="art/spinwheel_gif.gif" width="250" height="530">
+    
+</td>
+</tr>
+</table>
