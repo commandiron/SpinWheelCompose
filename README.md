@@ -3,30 +3,20 @@
 SpinWheel in Android using Jetpack Compose.
 
 ## How it looks
-<img src="art/spinwheel_gif.gif" width="250" height="530">&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/50905347/185155496-2b340a25-6d94-479c-bbfa-ad07459f436b.png" width="250" height="530">
+<img src="art/spinwheel_gif.gif" width="250" height="530">
 
-## Usage - Example
+## Usage
 ```kotlin  
-var isSpinning by remember { mutableStateOf(false) }
 val textList by remember { 
     mutableStateOf(
         listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4", "Pie 5", "Pie 6", "Pie 7", "Pie 8")
     )
 }
-LaunchedEffect(key1 = isSpinning){
-    if(!isSpinning){
-        resultDegree = Random().nextInt(360).toFloat()
-    }
-}
-DefaultSpinWheel(
-    isSpinning = isSpinning,
-    resultDegree = resultDegree,
-    onClick = { isSpinning = !isSpinning },
-    onFinish = { isSpinning = false }
-){ pieIndex ->
+DefaultSpinWheel(isSpinning = true){ pieIndex ->
     Text(text = textList[pieIndex])
 }
 ```
+
 ## Setup
 1. Open the file `settings.gradle` (it looks like that)
 ```groovy
