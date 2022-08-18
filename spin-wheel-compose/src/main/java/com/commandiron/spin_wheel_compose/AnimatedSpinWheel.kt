@@ -24,6 +24,7 @@ internal fun AnimatedSpinWheel(
     selectorWidth: Dp,
     selectorColor: Color,
     @IntRange(from = 2, to = 8) pieCount: Int,
+    pieColors: List<Color>,
     durationMillis: Int,
     delayMillis: Int,
     rotationPerSecond: Float,
@@ -86,6 +87,7 @@ internal fun AnimatedSpinWheel(
                 modifier = modifier,
                 spinSize = size - frameWidth - selectorWidth,
                 pieCount = pieCount,
+                pieColors = pieColors,
                 rotationDegree = rotationDegree.value,
                 onClick = onClick
             ){
