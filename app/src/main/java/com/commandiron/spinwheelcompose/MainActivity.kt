@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.commandiron.spin_wheel_compose.DefaultSpinWheel
+import com.commandiron.spin_wheel_compose.SpinWheelDefaults
 import com.commandiron.spinwheelcompose.ui.theme.SpinWheelComposeTheme
 import java.util.*
 
@@ -42,6 +44,9 @@ class MainActivity : ComponentActivity() {
                         resultDegree = Random().nextInt(360).toFloat()
                     }
                 }
+                Button(onClick = { /*TODO*/ }) {
+
+                }
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -50,9 +55,11 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center
                 ) {
                     DefaultSpinWheel(
-                        pieCount = 4,
+                        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
+                            pieCount = 4,
+                            resultDegree = resultDegree
+                        ),
                         isSpinning = isSpinning,
-                        resultDegree = resultDegree,
                         onClick = { isSpinning = !isSpinning },
                         onFinish = { isSpinning = false }
                     ){ pieIndex ->
@@ -60,9 +67,11 @@ class MainActivity : ComponentActivity() {
                     }
                     Spacer(modifier = Modifier.height(32.dp))
                     DefaultSpinWheel(
-                        pieCount = 8,
+                        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
+                            pieCount = 8,
+                            resultDegree = resultDegree
+                        ),
                         isSpinning = isSpinning,
-                        resultDegree = resultDegree,
                         onClick = { isSpinning = !isSpinning },
                         onFinish = { isSpinning = false }
                     ){ pieIndex ->
@@ -70,8 +79,10 @@ class MainActivity : ComponentActivity() {
                     }
 //                    Spacer(modifier = Modifier.height(32.dp))
 //                    DefaultSpinWheel(
+//                        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
+//                            resultDegree = resultDegree
+//                        ),
 //                        isSpinning = isSpinning,
-//                        resultDegree = resultDegree,
 //                        onClick = { isSpinning = !isSpinning },
 //                        onFinish = { isSpinning = false }
 //                    ){ pieIndex ->
