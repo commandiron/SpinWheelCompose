@@ -100,7 +100,7 @@ repeat(3){
 </td>
 <td>
             
-<img src="art/spinwheel_2_gif.gif" width="250" height="530">
+<img src="art/spinwheel_2.gif" width="250" height="530">
     
 </td>
 </tr>
