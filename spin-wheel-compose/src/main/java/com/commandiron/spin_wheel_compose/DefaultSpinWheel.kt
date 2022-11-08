@@ -90,7 +90,7 @@ object SpinWheelDefaults{
         rotationPerSecond: Float = 1f,
         easing: Easing = CubicBezierEasing(0.16f, 1f, 0.3f, 1f),
         startDegree: Float = 0f,
-        autoResetDelay: Long = 1000
+        autoResetDelay: Long = 500
     ): SpinWheelAnimationAttr = DefaultSpinWheelAnimationAttr(
         pieCount = pieCount,
         durationMillis = durationMillis,
