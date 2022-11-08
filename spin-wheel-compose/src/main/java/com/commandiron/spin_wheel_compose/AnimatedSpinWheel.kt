@@ -2,17 +2,12 @@ package com.commandiron.spin_wheel_compose
 
 import androidx.annotation.IntRange
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.PointerInputChange
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 @Composable
 internal fun AnimatedSpinWheel(
@@ -32,20 +27,24 @@ internal fun AnimatedSpinWheel(
     startDegree: Float,
     isSpinning: Boolean,
     resultDegree: Float,
+    autoResetDelay: Long = 0,
     onClick: () -> Unit,
-    onFinish: () -> Unit,
+    onFinish: (resultIndex: Int) -> Unit,
     content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ){
+    val actualStartDegree = startDegree + 90f
+    val actualResultDegree = resultDegree + 90f
     val rotationDegree = remember {
-        Animatable(startDegree)
+        Animatable(actualStartDegree)
     }
 
     var animationResult by remember {
         mutableStateOf<AnimationResult<Float, AnimationVector1D>?>(null)
     }
-    LaunchedEffect(isSpinning){
+    var spin by remember { mutableStateOf(false) }
+    LaunchedEffect(isSpinning, spin){
         while (isSpinning) {
-            val targetValue = 360f * rotationPerSecond * (durationMillis / 1000) + resultDegree
+            val targetValue = 360f * rotationPerSecond * (durationMillis / 1000) + actualResultDegree
             animationResult = rotationDegree.animateTo(
                 targetValue = targetValue,
                 animationSpec = tween(
@@ -54,15 +53,24 @@ internal fun AnimatedSpinWheel(
                     easing = easing
                 )
             )
-            rotationDegree.snapTo(resultDegree)
-            animationResult?.let {
-                if(it.endReason.name == "Finished"){
-                    onFinish()
+        }
+    }
+    LaunchedEffect(animationResult) {
+        animationResult?.let {
+            if(it.endReason.name == "Finished"){
+                val pieDegree = 360f / pieCount // 45
+                val quotient = resultDegree.toInt() / pieDegree.toInt()
+                val resultIndex = pieCount - quotient - 1
+
+                onFinish(resultIndex)
+                if(autoResetDelay != 0L) {
+                    delay(autoResetDelay)
+                    rotationDegree.snapTo(actualStartDegree)
+                    spin = !spin
+                } else {
+                    rotationDegree.snapTo(actualResultDegree)
                 }
             }
-        }
-        if(!isSpinning){
-            rotationDegree.snapTo(resultDegree)
         }
     }
     SpinWheelSelector(
