@@ -44,6 +44,7 @@ class MainActivity : ComponentActivity() {
                             listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4", "Pie 5", "Pie 6", "Pie 7", "Pie 8")
                         )
                     }
+
                     DefaultSpinWheel(isSpinning = true){ pieIndex ->
                         Text(text = textList[pieIndex])
                     }
@@ -83,7 +84,8 @@ class MainActivity : ComponentActivity() {
 //                                delayMillis = 200,
 //                                rotationPerSecond = 2f,
 //                                easing = LinearOutSlowInEasing,
-//                                startDegree = 90f
+//                                startDegree = 90f,
+//                                autoResetDelay = 500
 //                            ),
 //                            isSpinning = isSpinning,
 //                            onClick = { isSpinning = !isSpinning },
