@@ -1,50 +1,34 @@
 package com.commandiron.spin_wheel_compose
 
-import androidx.annotation.IntRange
-import androidx.compose.animation.core.CubicBezierEasing
-import androidx.compose.animation.core.Easing
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.commandiron.spin_wheel_compose.state.SpinWheelState
+import com.commandiron.spin_wheel_compose.state.rememberSpinWheelState
 
 @Composable
-fun DefaultSpinWheel(
+fun SpinWheel(
     modifier: Modifier = Modifier,
+    state: SpinWheelState = rememberSpinWheelState(),
     dimensions: SpinWheelDimensions = SpinWheelDefaults.spinWheelDimensions(),
     colors: SpinWheelColors = SpinWheelDefaults.spinWheelColors(),
-    animationAttr: SpinWheelAnimationAttr = SpinWheelDefaults.spinWheelAnimationAttr(),
-    isSpinning: Boolean = false,
-    resultDegree: Float = 30f,
     onClick: () -> Unit = {},
-    onFinish: (resultIndex: Int) -> Unit = {},
     content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ) {
     AnimatedSpinWheel(
         modifier = modifier,
+        state = state,
         size = dimensions.spinWheelSize().value,
         frameWidth = dimensions.frameWidth().value,
+        selectorWidth = dimensions.selectorWidth().value,
         frameColor = colors.frameColor().value,
         dividerColor = colors.dividerColor().value,
-        selectorWidth = dimensions.selectorWidth().value,
         selectorColor = colors.selectorColor().value,
-        pieCount = animationAttr.pieCount().value,
         pieColors = colors.pieColors().value,
-        durationMillis = animationAttr.durationMillis().value,
-        delayMillis = animationAttr.delayMillis().value,
-        rotationPerSecond = animationAttr.rotationPerSecond().value,
-        easing = animationAttr.easing().value,
-        startDegree = animationAttr.startDegree().value,
-        autoResetDelay = animationAttr.autoResetDelay().value,
-        isSpinning = isSpinning,
-        resultDegree = resultDegree,
         onClick = onClick,
-        onFinish = onFinish,
         content = content
     )
 }
@@ -81,24 +65,6 @@ object SpinWheelDefaults{
         spinWheelSize = spinWheelSize,
         frameWidth = frameWidth,
         selectorWidth = selectorWidth
-    )
-    @Composable
-    fun spinWheelAnimationAttr(
-        @IntRange(from = 2, to = 8) pieCount: Int = 8,
-        durationMillis: Int = 12000,
-        delayMillis: Int = 0,
-        rotationPerSecond: Float = 1f,
-        easing: Easing = CubicBezierEasing(0.16f, 1f, 0.3f, 1f),
-        startDegree: Float = 0f,
-        autoResetDelay: Long = 500
-    ): SpinWheelAnimationAttr = DefaultSpinWheelAnimationAttr(
-        pieCount = pieCount,
-        durationMillis = durationMillis,
-        delayMillis = delayMillis,
-        rotationPerSecond = rotationPerSecond,
-        easing = easing,
-        startDegree = startDegree,
-        autoResetDelay = autoResetDelay
     )
 }
 
@@ -173,61 +139,3 @@ private class DefaultSpinWheelDimensions(
         return rememberUpdatedState(selectorWidth)
     }
 }
-
-interface SpinWheelAnimationAttr {
-    @Composable
-    fun pieCount(): State<Int>
-    @Composable
-    fun durationMillis(): State<Int>
-    @Composable
-    fun delayMillis(): State<Int>
-    @Composable
-    fun rotationPerSecond(): State<Float>
-    @Composable
-    fun easing(): State<Easing>
-    @Composable
-    fun startDegree(): State<Float>
-    @Composable
-    fun autoResetDelay(): State<Long>
-}
-
-@Immutable
-private class DefaultSpinWheelAnimationAttr(
-    private val pieCount: Int,
-    private val durationMillis: Int,
-    private val delayMillis: Int,
-    private val rotationPerSecond: Float,
-    private val easing: Easing,
-    private val startDegree: Float,
-    private val autoResetDelay: Long
-) : SpinWheelAnimationAttr {
-    @Composable
-    override fun pieCount(): State<Int> {
-        return rememberUpdatedState(pieCount)
-    }
-    @Composable
-    override fun durationMillis(): State<Int> {
-        return rememberUpdatedState(durationMillis)
-    }
-    @Composable
-    override fun delayMillis(): State<Int> {
-        return rememberUpdatedState(delayMillis)
-    }
-    @Composable
-    override fun rotationPerSecond(): State<Float> {
-        return rememberUpdatedState(rotationPerSecond)
-    }
-    @Composable
-    override fun easing(): State<Easing> {
-        return rememberUpdatedState(easing)
-    }
-    @Composable
-    override fun startDegree(): State<Float> {
-        return rememberUpdatedState(startDegree)
-    }
-    @Composable
-    override fun autoResetDelay(): State<Long> {
-        return rememberUpdatedState(autoResetDelay)
-    }
-}
-

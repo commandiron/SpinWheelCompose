@@ -24,7 +24,7 @@ internal fun SpinWheelPies(
     spinWheelContent: @Composable BoxScope.() -> Unit
 ) {
     val pieAngle = 360f / pieCount
-    val startAngleOffset = 180
+    val startAngleOffset = 270
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Canvas(
             modifier = Modifier
