@@ -61,7 +61,7 @@ internal fun SpinWheelFrame(
             }
             val pieAngle = 360f / pieCount
             val spinRadius = canvasWidth / 2
-            val startOffset = 90
+            val startOffset = 180
             //Middle Separator Dot
             val middleSeparatorRadius = frameWidth.toPx() / 8
             for(i in 0 until pieCount){

@@ -1,11 +1,13 @@
 package com.commandiron.spin_wheel_compose.state
 
+import androidx.annotation.IntRange
 import androidx.compose.animation.core.*
 import androidx.compose.runtime.*
 import kotlinx.coroutines.*
 import java.util.*
 
 data class SpinWheelState(
+    internal val pieCount: Int,
     private val durationMillis: Int,
     private val delayMillis: Int,
     private val rotationPerSecond: Float,
@@ -28,7 +30,7 @@ data class SpinWheelState(
         }
     }
 
-    suspend fun spin() {
+    suspend fun spin(onFinish: (pieIndex: Int) -> Unit = {}) {
         if(spinAnimationState == SpinAnimationState.STOPPED) {
 
             spinAnimationState = SpinAnimationState.SPINNING
@@ -36,13 +38,16 @@ data class SpinWheelState(
             val randomRotationDegree = generateRandomRotationDegree()
 
             rotation.animateTo(
-                targetValue = (360f * rotationPerSecond * (durationMillis / 1000)) + (resultDegree ?:  randomRotationDegree),
+                targetValue = (360f * rotationPerSecond * (durationMillis / 1000)) + (resultDegree ?: randomRotationDegree),
                 animationSpec = tween(
                     durationMillis = durationMillis,
                     delayMillis = delayMillis,
                     easing = easing
                 )
             )
+
+            onFinish(360f / (resultDegree ?: randomRotationDegree)
+
             rotation.snapTo(randomRotationDegree)
 
             spinAnimationState = SpinAnimationState.STOPPED
@@ -74,6 +79,7 @@ enum class SpinAnimationState {
 
 @Composable
 fun rememberSpinWheelState(
+    @IntRange(from = 2, to = 8) pieCount: Int = 8,
     durationMillis: Int = 12000,
     delayMillis: Int = 0,
     rotationPerSecond: Float = 1f,
@@ -84,6 +90,7 @@ fun rememberSpinWheelState(
 ): SpinWheelState {
     return remember {
         SpinWheelState(
+            pieCount,
             durationMillis,
             delayMillis,
             rotationPerSecond,

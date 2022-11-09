@@ -20,7 +20,6 @@ internal fun AnimatedSpinWheel(
     dividerColor: Color,
     selectorColor: Color,
     pieColors: List<Color>,
-    pieCount: Int,
     onClick: () -> Unit,
     content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ){
@@ -33,7 +32,7 @@ internal fun AnimatedSpinWheel(
     SpinWheelSelector(
         modifier = modifier,
         frameSize = size,
-        pieCount = pieCount,
+        pieCount = state.pieCount,
         selectorWidth = selectorWidth,
         selectorColor = selectorColor,
         rotationDegree = state.rotation.value
@@ -41,7 +40,7 @@ internal fun AnimatedSpinWheel(
         SpinWheelFrame(
             modifier = modifier,
             frameSize = size - selectorWidth,
-            pieCount = pieCount,
+            pieCount = state.pieCount,
             frameWidth = frameWidth,
             frameColor = frameColor,
             dividerColor =  dividerColor,
@@ -51,7 +50,7 @@ internal fun AnimatedSpinWheel(
             SpinWheelPies(
                 modifier = modifier,
                 spinSize = size - frameWidth - selectorWidth,
-                pieCount = pieCount,
+                pieCount = state.pieCount,
                 pieColors = pieColors,
                 rotationDegree = state.rotation.value,
                 onClick = onClick
@@ -59,7 +58,7 @@ internal fun AnimatedSpinWheel(
                 SpinWheelContent(
                     modifier = modifier,
                     spinSize = size - frameWidth - selectorWidth,
-                    pieCount = pieCount,
+                    pieCount = state.pieCount,
                     rotationDegree = state.rotation.value
                 ){
                     content(it)

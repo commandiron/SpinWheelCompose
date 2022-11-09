@@ -15,7 +15,6 @@ fun SpinWheel(
     state: SpinWheelState = rememberSpinWheelState(),
     dimensions: SpinWheelDimensions = SpinWheelDefaults.spinWheelDimensions(),
     colors: SpinWheelColors = SpinWheelDefaults.spinWheelColors(),
-    pieCount: Int = 8,
     onClick: () -> Unit = {},
     content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ) {
@@ -29,7 +28,6 @@ fun SpinWheel(
         dividerColor = colors.dividerColor().value,
         selectorColor = colors.selectorColor().value,
         pieColors = colors.pieColors().value,
-        pieCount = pieCount,
         onClick = onClick,
         content = content
     )
