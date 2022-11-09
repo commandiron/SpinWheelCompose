@@ -15,7 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.commandiron.spin_wheel_compose.SpinWheel
+import com.commandiron.spin_wheel_compose.AnimatedSpinWheel
 import com.commandiron.spin_wheel_compose.state.rememberSpinWheelState
 import com.commandiron.spinwheelcompose.ui.theme.SpinWheelComposeTheme
 import kotlinx.coroutines.launch
@@ -37,13 +37,15 @@ class MainActivity : ComponentActivity() {
                             listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4", "Pie 5", "Pie 6", "Pie 7", "Pie 8")
                         )
                     }
-                    val state = rememberSpinWheelState(onFinish = { println("1") })
+                    val state = rememberSpinWheelState()
                     val scope = rememberCoroutineScope()
-                    SpinWheel(
+                    AnimatedSpinWheel(
                         state = state,
                         onClick = {
                             scope.launch {
-                                state.spin()
+                                state.spin{
+                                    println(it)
+                                }
                             }
                         }
                     ){ pieIndex ->
