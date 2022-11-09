@@ -7,12 +7,19 @@ SpinWheel in Android using Jetpack Compose.
 
 ## Usage
 ```kotlin  
-val textList by remember { 
+val textList by remember {
     mutableStateOf(
         listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4", "Pie 5", "Pie 6", "Pie 7", "Pie 8")
     )
 }
-DefaultSpinWheel(isSpinning = true){ pieIndex ->
+
+val state = rememberSpinWheelState()
+val scope = rememberCoroutineScope()
+
+SpinWheel(
+    state = state,
+    onClick = { scope.launch { state.animate() } }
+){ pieIndex ->
     Text(text = textList[pieIndex])
 }
 ```
