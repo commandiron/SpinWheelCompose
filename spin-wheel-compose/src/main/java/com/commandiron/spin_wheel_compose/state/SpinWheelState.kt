@@ -1,9 +1,12 @@
 package com.commandiron.spin_wheel_compose.state
 
 import androidx.annotation.IntRange
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.Easing
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
 import java.util.*
 
 data class SpinWheelState(
@@ -19,10 +22,10 @@ data class SpinWheelState(
     internal var rotation by mutableStateOf(Animatable(startDegree))
     private var spinAnimationState by mutableStateOf(SpinAnimationState.STOPPED)
 
-    suspend fun spinToReset() {
+    suspend fun spinToReset(onFinish: (pieIndex: Int) -> Unit = {}) {
         when(spinAnimationState) {
             SpinAnimationState.STOPPED -> {
-                spin()
+                spin(onFinish = onFinish)
             }
             SpinAnimationState.SPINNING -> {
                 reset()
@@ -46,7 +49,11 @@ data class SpinWheelState(
                 )
             )
 
-            onFinish(360f / (resultDegree ?: randomRotationDegree)
+            val pieDegree = 360f / pieCount
+            val quotient = (resultDegree ?: randomRotationDegree).toInt() / pieDegree.toInt()
+            val resultIndex = pieCount - quotient - 1
+
+            onFinish(resultIndex)
 
             rotation.snapTo(randomRotationDegree)
 

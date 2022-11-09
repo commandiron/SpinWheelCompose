@@ -43,7 +43,9 @@ class MainActivity : ComponentActivity() {
                         state = state,
                         onClick = {
                             scope.launch {
-                                state.spinToReset()
+                                state.spinToReset {
+                                    println(it)
+                                }
                             }
                         }
                     ){ pieIndex ->
