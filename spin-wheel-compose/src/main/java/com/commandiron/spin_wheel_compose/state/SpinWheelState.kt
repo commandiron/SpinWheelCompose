@@ -2,8 +2,10 @@ package com.commandiron.spin_wheel_compose.state
 
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.Easing
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -25,7 +27,27 @@ data class SpinWheelState(
     val resultDegree: Float? = null,
     val autoResetDelay: Long? = null,
 ) {
+    private var rotation by mutableStateOf(startDegree)
 
+    fun spin() {
+        rotation = resultDegree ?: (0..360).random().toFloat()
+    }
+
+    internal val rotationDegree: Float
+        @Composable
+        get() {
+            return animateFloatAsState(
+                targetValue = rotation,
+                animationSpec = tween(
+                    durationMillis = durationMillis,
+                    delayMillis = delayMillis,
+                    easing = easing
+                ),
+                finishedListener = {
+
+                }
+            ).value
+        }
 }
 
 @Composable

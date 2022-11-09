@@ -21,7 +21,7 @@ internal fun AnimatedSpinWheel(
         pieCount = state.pieCount,
         selectorWidth = state.selectorWidth,
         selectorColor = state.selectorColor,
-        rotationDegree = 0f
+        rotationDegree = state.rotationDegree
     ) {
         SpinWheelFrame(
             modifier = modifier,
@@ -30,7 +30,7 @@ internal fun AnimatedSpinWheel(
             frameWidth = state.frameWidth,
             frameColor = state.frameColor,
             dividerColor =  state.dividerColor,
-            rotationDegree = 0f,
+            rotationDegree = state.rotationDegree,
             onClick = onClick,
         ) {
             SpinWheelPies(
@@ -38,14 +38,14 @@ internal fun AnimatedSpinWheel(
                 spinSize = state.size - state.frameWidth - state.selectorWidth,
                 pieCount = state.pieCount,
                 pieColors = state.pieColors,
-                rotationDegree = 0f,
+                rotationDegree = state.rotationDegree,
                 onClick = onClick
             ){
                 SpinWheelContent(
                     modifier = modifier,
                     spinSize = state.size - state.frameWidth - state.selectorWidth,
                     pieCount = state.pieCount,
-                    rotationDegree = 0f
+                    rotationDegree = state.rotationDegree
                 ){
                     content(it)
                 }
