@@ -7,12 +7,27 @@ SpinWheel in Android using Jetpack Compose.
 
 ## Usage
 ```kotlin  
-val textList by remember { 
+val textList by remember {
     mutableStateOf(
         listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4", "Pie 5", "Pie 6", "Pie 7", "Pie 8")
     )
 }
-DefaultSpinWheel(isSpinning = true){ pieIndex ->
+
+val state = rememberSpinWheelState()
+val scope = rememberCoroutineScope()
+
+SpinWheel(
+    state = state,
+    onClick = { 
+        scope.launch { 
+            state.animate(
+                onFinish = {pieIndex ->  
+
+                }
+            ) 
+        } 
+    }
+){ pieIndex ->
     Text(text = textList[pieIndex])
 }
 ```
@@ -36,7 +51,7 @@ dependencyResolutionManagement {
 3. Add dependency
 ```groovy
 dependencies {
-        implementation 'com.github.commandiron:SpinWheelCompose:1.0.6'
+        implementation 'com.github.commandiron:SpinWheelCompose:1.1.0'
 }
 ```
 
@@ -57,9 +72,18 @@ val iconList by remember {
         )
     )
 }
-var isSpinning by remember { mutableStateOf(false)}
 repeat(3){
-    DefaultSpinWheel(
+    SpinWheel(
+        state = rememberSpinWheelState(
+            pieCount = 4,
+            durationMillis = 20000,
+            delayMillis = 200,
+            rotationPerSecond = 2f,
+            easing = LinearOutSlowInEasing,
+            startDegree = 90f,
+            resultDegree = 212f,
+            autoSpinDelay = 0
+        ),
         dimensions = SpinWheelDefaults.spinWheelDimensions(
             spinWheelSize = 180.dp,
             frameWidth = 20.dp,
@@ -75,18 +99,7 @@ repeat(3){
                 Color(0xFF4f518c),
                 Color(0xFF2c2a4a)
             )
-        ),
-        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
-            pieCount = 4,
-            durationMillis = 4000,
-            delayMillis = 200,
-            rotationPerSecond = 2f,
-            easing = LinearOutSlowInEasing,
-            startDegree = 90f
-        ),
-        isSpinning = isSpinning,
-        onClick = { isSpinning = !isSpinning },
-        onFinish = { isSpinning = false }
+        )
     ){ pieIndex ->
         Icon(
             imageVector = iconList[pieIndex],
