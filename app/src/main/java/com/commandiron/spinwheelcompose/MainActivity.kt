@@ -3,29 +3,22 @@ package com.commandiron.spinwheelcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import com.commandiron.spin_wheel_compose.DefaultSpinWheel
-import com.commandiron.spin_wheel_compose.SpinWheelDefaults
+import com.commandiron.spin_wheel_compose.SpinWheel
+import com.commandiron.spin_wheel_compose.state.rememberSpinWheelState
 import com.commandiron.spinwheelcompose.ui.theme.SpinWheelComposeTheme
-import java.util.*
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,20 +33,18 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center
                 ) {
                     val textList by remember {
-
                         mutableStateOf(
                             listOf("Pie 1", "Pie 2", "Pie 3", "Pie 4", "Pie 5", "Pie 6", "Pie 7", "Pie 8")
                         )
                     }
-
-                    var isSpinning by remember { mutableStateOf(false) }
-                    DefaultSpinWheel(
-                        isSpinning = isSpinning,
+                    val state = rememberSpinWheelState(onFinish = { println("1") })
+                    val scope = rememberCoroutineScope()
+                    SpinWheel(
+                        state = state,
                         onClick = {
-                            isSpinning = true
-                        },
-                        onFinish = {
-                            println(it)
+                            scope.launch {
+                                state.spin()
+                            }
                         }
                     ){ pieIndex ->
                         Text(text = textList[pieIndex])

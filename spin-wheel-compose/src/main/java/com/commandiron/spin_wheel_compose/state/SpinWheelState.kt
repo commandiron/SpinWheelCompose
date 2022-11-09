@@ -1,11 +1,11 @@
 package com.commandiron.spin_wheel_compose.state
 
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import java.util.*
 
 data class SpinWheelState(
     val size: Dp,
@@ -23,28 +23,33 @@ data class SpinWheelState(
     val startDegree: Float,
     val resultDegree: Float? = null,
     val autoResetDelay: Long? = null,
+    val onFinish: () -> Unit,
 ) {
-    private var rotation by mutableStateOf(startDegree)
+    var rotation by mutableStateOf(startDegree)
+    private var spinState by mutableStateOf(SpinState.STOPPED)
 
-    fun spin() {
-        rotation = resultDegree ?: (0..360).random().toFloat()
+    private fun generateRandomRotationDegree(): Float {
+        return Random().nextInt(360).toFloat()
     }
 
-    internal val rotationDegree: Float
-        @Composable
-        get() {
-            return animateFloatAsState(
-                targetValue = rotation,
-                animationSpec = tween(
-                    durationMillis = durationMillis,
-                    delayMillis = delayMillis,
-                    easing = easing
-                ),
-                finishedListener = {
+    suspend fun spin() {
+        animate(
+            initialValue = startDegree,
+            targetValue = (360f * rotationPerSecond * (durationMillis / 1000)) + (resultDegree ?: generateRandomRotationDegree()),
+            animationSpec = tween(
+                durationMillis = durationMillis,
+                delayMillis = delayMillis,
+                easing = easing
+            ),
+            block = { value,_ ->
+                rotation = value
+            }
+        )
+    }
+}
 
-                }
-            ).value
-        }
+enum class SpinState {
+    STOPPED, SPINNING
 }
 
 @Composable
@@ -73,6 +78,7 @@ fun rememberSpinWheelState(
     startDegree: Float = 0f,
     resultDegree: Float? = null,
     autoResetDelay: Long? = null,
+    onFinish: () -> Unit
 ): SpinWheelState {
     return remember {
         SpinWheelState(
@@ -90,7 +96,8 @@ fun rememberSpinWheelState(
             easing,
             startDegree,
             resultDegree,
-            autoResetDelay
+            autoResetDelay,
+            onFinish
         )
     }
 }
