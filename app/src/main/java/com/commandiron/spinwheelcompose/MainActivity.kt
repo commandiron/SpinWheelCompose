@@ -46,9 +46,22 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    DefaultSpinWheel(isSpinning = true){ pieIndex ->
+                    var isSpinning by remember { mutableStateOf(false) }
+                    DefaultSpinWheel(
+                        isSpinning = isSpinning,
+                        onClick = {
+                            isSpinning = true
+                        },
+                        onFinish = {
+                            println(it)
+                        }
+                    ){ pieIndex ->
                         Text(text = textList[pieIndex])
                     }
+
+//                    DefaultSpinWheel(isSpinning = true){ pieIndex ->
+//                        Text(text = textList[pieIndex])
+//                    }
 
 //                    val iconList by remember {
 //                        mutableStateOf(

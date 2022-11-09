@@ -23,7 +23,7 @@ internal fun SpinWheelContent(
     content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ) {
     val pieAngle = 360f / pieCount
-    val startOffset = 90
+    val startOffset = 180
     val radius = (spinSize.value / 2)
     val pieRadius = getPieRadius(pieCount, radius)
     Box(

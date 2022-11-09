@@ -20,7 +20,7 @@ fun DefaultSpinWheel(
     colors: SpinWheelColors = SpinWheelDefaults.spinWheelColors(),
     animationAttr: SpinWheelAnimationAttr = SpinWheelDefaults.spinWheelAnimationAttr(),
     isSpinning: Boolean = false,
-    resultDegree: Float = 30f,
+    resultDegree: Float? = null,
     onClick: () -> Unit = {},
     onFinish: (resultIndex: Int) -> Unit = {},
     content: @Composable BoxScope.(pieIndex: Int) -> Unit
@@ -90,7 +90,7 @@ object SpinWheelDefaults{
         rotationPerSecond: Float = 1f,
         easing: Easing = CubicBezierEasing(0.16f, 1f, 0.3f, 1f),
         startDegree: Float = 0f,
-        autoResetDelay: Long = 500
+        autoResetDelay: Long? = null
     ): SpinWheelAnimationAttr = DefaultSpinWheelAnimationAttr(
         pieCount = pieCount,
         durationMillis = durationMillis,
@@ -188,7 +188,7 @@ interface SpinWheelAnimationAttr {
     @Composable
     fun startDegree(): State<Float>
     @Composable
-    fun autoResetDelay(): State<Long>
+    fun autoResetDelay(): State<Long?>
 }
 
 @Immutable
@@ -199,7 +199,7 @@ private class DefaultSpinWheelAnimationAttr(
     private val rotationPerSecond: Float,
     private val easing: Easing,
     private val startDegree: Float,
-    private val autoResetDelay: Long
+    private val autoResetDelay: Long?
 ) : SpinWheelAnimationAttr {
     @Composable
     override fun pieCount(): State<Int> {
@@ -226,7 +226,7 @@ private class DefaultSpinWheelAnimationAttr(
         return rememberUpdatedState(startDegree)
     }
     @Composable
-    override fun autoResetDelay(): State<Long> {
+    override fun autoResetDelay(): State<Long?> {
         return rememberUpdatedState(autoResetDelay)
     }
 }
