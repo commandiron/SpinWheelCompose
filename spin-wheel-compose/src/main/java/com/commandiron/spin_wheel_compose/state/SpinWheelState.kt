@@ -22,7 +22,7 @@ data class SpinWheelState(
     internal var rotation by mutableStateOf(Animatable(startDegree))
     private var spinAnimationState by mutableStateOf(SpinAnimationState.STOPPED)
 
-    suspend fun spinToReset(onFinish: (pieIndex: Int) -> Unit = {}) {
+    suspend fun animate(onFinish: (pieIndex: Int) -> Unit = {}) {
         when(spinAnimationState) {
             SpinAnimationState.STOPPED -> {
                 spin(onFinish = onFinish)

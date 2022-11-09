@@ -26,7 +26,7 @@ internal fun AnimatedSpinWheel(
     LaunchedEffect(key1 = state.autoSpinDelay) {
         state.autoSpinDelay?.let {
             delay(it)
-            state.spinToReset()
+            state.spin()
         }
     }
     SpinWheelSelector(
