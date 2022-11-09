@@ -64,9 +64,18 @@ val iconList by remember {
         )
     )
 }
-var isSpinning by remember { mutableStateOf(false)}
 repeat(3){
-    DefaultSpinWheel(
+    SpinWheel(
+        state = rememberSpinWheelState(
+            pieCount = 4,
+            durationMillis = 20000,
+            delayMillis = 200,
+            rotationPerSecond = 2f,
+            easing = LinearOutSlowInEasing,
+            startDegree = 90f,
+            resultDegree = 212f,
+            autoSpinDelay = 0
+        ),
         dimensions = SpinWheelDefaults.spinWheelDimensions(
             spinWheelSize = 180.dp,
             frameWidth = 20.dp,
@@ -82,18 +91,7 @@ repeat(3){
                 Color(0xFF4f518c),
                 Color(0xFF2c2a4a)
             )
-        ),
-        animationAttr = SpinWheelDefaults.spinWheelAnimationAttr(
-            pieCount = 4,
-            durationMillis = 4000,
-            delayMillis = 200,
-            rotationPerSecond = 2f,
-            easing = LinearOutSlowInEasing,
-            startDegree = 90f
-        ),
-        isSpinning = isSpinning,
-        onClick = { isSpinning = !isSpinning },
-        onFinish = { isSpinning = false }
+        )
     ){ pieIndex ->
         Icon(
             imageVector = iconList[pieIndex],
