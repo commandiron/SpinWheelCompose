@@ -9,26 +9,17 @@ import androidx.compose.ui.unit.dp
 import com.commandiron.spin_wheel_compose.state.SpinWheelState
 
 @Composable
-fun AnimatedSpinWheel(
-    modifier: Modifier = Modifier,
+internal fun AnimatedSpinWheel(
+    modifier: Modifier,
     state: SpinWheelState,
-    size: Dp = 240.dp,
-    frameWidth: Dp = 10.dp,
-    selectorWidth: Dp = 12.dp,
-    frameColor: Color = Color(0xFF941c2f),
-    dividerColor: Color = Color.White,
-    selectorColor: Color = Color(0xFFFF0000),
-    pieColors: List<Color> =  listOf(
-        Color(0xFFef476f),
-        Color(0xFFf78c6b),
-        Color(0xFFffd166),
-        Color(0xFF83d483),
-        Color(0xFF06d6a0),
-        Color(0xFF0cb0a9),
-        Color(0xFF118ab2),
-        Color(0xFF073b4c)
-    ),
-    pieCount: Int = 8,
+    size: Dp,
+    frameWidth: Dp,
+    selectorWidth: Dp,
+    frameColor: Color,
+    dividerColor: Color,
+    selectorColor: Color,
+    pieColors: List<Color>,
+    pieCount: Int,
     onClick: () -> Unit,
     content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ){
