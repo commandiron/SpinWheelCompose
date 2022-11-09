@@ -1,53 +1,65 @@
 package com.commandiron.spin_wheel_compose.state
 
-import androidx.compose.animation.core.CubicBezierEasing
-import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.animate
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.*
 import java.util.*
 
 data class SpinWheelState(
-    val durationMillis: Int,
-    val delayMillis: Int,
-    val rotationPerSecond: Float,
-    val easing: Easing,
-    val startDegree: Float,
-    val resultDegree: Float? = null,
-    val autoResetDelay: Long? = null
+    private val durationMillis: Int,
+    private val delayMillis: Int,
+    private val rotationPerSecond: Float,
+    private val easing: Easing,
+    private val startDegree: Float,
+    private val resultDegree: Float? = null,
+    internal val autoSpinDelay: Long? = null,
 ) {
-    var rotation by mutableStateOf(startDegree)
-    private var spinState by mutableStateOf(SpinState.STOPPED)
+    internal var rotation by mutableStateOf(Animatable(startDegree))
+    private var spinAnimationState by mutableStateOf(SpinAnimationState.STOPPED)
 
-    suspend fun spin(onAnimation: (spinState: SpinState) -> Unit) {
-        when(spinState) {
-            SpinState.STOPPED ->  {
-                spinState = SpinState.SPINNING
-                onAnimation(spinState)
+    suspend fun spinToReset() {
+        when(spinAnimationState) {
+            SpinAnimationState.STOPPED -> {
+                spin()
+            }
+            SpinAnimationState.SPINNING -> {
+                reset()
+            }
+        }
+    }
 
-                animate(
-                    initialValue = startDegree,
-                    targetValue = (360f * rotationPerSecond * (durationMillis / 1000)) + (resultDegree ?: generateRandomRotationDegree()),
-                    animationSpec = tween(
-                        durationMillis = durationMillis,
-                        delayMillis = delayMillis,
-                        easing = easing
-                    ),
-                    block = { value, _ ->
-                        rotation = value
-                    }
+    suspend fun spin() {
+        if(spinAnimationState == SpinAnimationState.STOPPED) {
+
+            spinAnimationState = SpinAnimationState.SPINNING
+
+            val randomRotationDegree = generateRandomRotationDegree()
+
+            rotation.animateTo(
+                targetValue = (360f * rotationPerSecond * (durationMillis / 1000)) + (resultDegree ?:  randomRotationDegree),
+                animationSpec = tween(
+                    durationMillis = durationMillis,
+                    delayMillis = delayMillis,
+                    easing = easing
                 )
+            )
+            rotation.snapTo(randomRotationDegree)
 
-                spinState = SpinState.STOPPED
-                onAnimation(spinState)
+            spinAnimationState = SpinAnimationState.STOPPED
+
+            autoSpinDelay?.let {
+                delay(it)
+                spin()
             }
-            SpinState.SPINNING -> {
+        }
+    }
 
+    suspend fun reset() {
+        if(spinAnimationState == SpinAnimationState.SPINNING) {
 
-            }
+            rotation.snapTo(startDegree)
+
+            spinAnimationState = SpinAnimationState.STOPPED
         }
     }
 
@@ -56,7 +68,7 @@ data class SpinWheelState(
     }
 }
 
-enum class SpinState {
+enum class SpinAnimationState {
     STOPPED, SPINNING
 }
 
@@ -68,7 +80,7 @@ fun rememberSpinWheelState(
     easing: Easing = CubicBezierEasing(0.16f, 1f, 0.3f, 1f),
     startDegree: Float = 0f,
     resultDegree: Float? = null,
-    autoResetDelay: Long? = null
+    autoSpinDelay: Long? = null
 ): SpinWheelState {
     return remember {
         SpinWheelState(
@@ -78,7 +90,7 @@ fun rememberSpinWheelState(
             easing,
             startDegree,
             resultDegree,
-            autoResetDelay
+            autoSpinDelay
         )
     }
 }

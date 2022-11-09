@@ -2,11 +2,12 @@ package com.commandiron.spin_wheel_compose
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.commandiron.spin_wheel_compose.state.SpinWheelState
+import kotlinx.coroutines.delay
 
 @Composable
 internal fun AnimatedSpinWheel(
@@ -23,13 +24,19 @@ internal fun AnimatedSpinWheel(
     onClick: () -> Unit,
     content: @Composable BoxScope.(pieIndex: Int) -> Unit
 ){
+    LaunchedEffect(key1 = state.autoSpinDelay) {
+        state.autoSpinDelay?.let {
+            delay(it)
+            state.spinToReset()
+        }
+    }
     SpinWheelSelector(
         modifier = modifier,
         frameSize = size,
         pieCount = pieCount,
         selectorWidth = selectorWidth,
         selectorColor = selectorColor,
-        rotationDegree = state.rotation
+        rotationDegree = state.rotation.value
     ) {
         SpinWheelFrame(
             modifier = modifier,
@@ -38,7 +45,7 @@ internal fun AnimatedSpinWheel(
             frameWidth = frameWidth,
             frameColor = frameColor,
             dividerColor =  dividerColor,
-            rotationDegree = state.rotation,
+            rotationDegree = state.rotation.value,
             onClick = onClick,
         ) {
             SpinWheelPies(
@@ -46,14 +53,14 @@ internal fun AnimatedSpinWheel(
                 spinSize = size - frameWidth - selectorWidth,
                 pieCount = pieCount,
                 pieColors = pieColors,
-                rotationDegree = state.rotation,
+                rotationDegree = state.rotation.value,
                 onClick = onClick
             ){
                 SpinWheelContent(
                     modifier = modifier,
                     spinSize = size - frameWidth - selectorWidth,
                     pieCount = pieCount,
-                    rotationDegree = state.rotation
+                    rotationDegree = state.rotation.value
                 ){
                     content(it)
                 }
