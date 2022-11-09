@@ -18,7 +18,7 @@ val scope = rememberCoroutineScope()
 
 SpinWheel(
     state = state,
-    onClick = { scope.launch { state.animate() } }
+    onClick = { scope.launch { state.animate(onFinish = {pieIndex ->  }) } }
 ){ pieIndex ->
     Text(text = textList[pieIndex])
 }
