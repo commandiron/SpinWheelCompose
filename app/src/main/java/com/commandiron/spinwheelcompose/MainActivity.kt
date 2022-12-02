@@ -47,15 +47,7 @@ class MainActivity : ComponentActivity() {
 
                     SpinWheel(
                         state = state,
-                        onClick = {
-                            scope.launch {
-                                state.animate(
-                                    onFinish = {pieIndex ->
-
-                                    }
-                                )
-                            }
-                        }
+                        onClick = { scope.launch { state.animate {pieIndex -> } } }
                     ){ pieIndex ->
                         Text(text = textList[pieIndex])
                     }

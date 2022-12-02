@@ -55,7 +55,7 @@ data class SpinWheelState(
 
             onFinish(resultIndex)
 
-            rotation.snapTo(randomRotationDegree)
+            rotation.snapTo(resultDegree ?:randomRotationDegree)
 
             spinAnimationState = SpinAnimationState.STOPPED
 
