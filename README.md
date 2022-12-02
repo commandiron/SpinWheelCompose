@@ -43,7 +43,7 @@ dependencyResolutionManagement {
 3. Add dependency
 ```groovy
 dependencies {
-        implementation 'com.github.commandiron:SpinWheelCompose:1.1.0'
+        implementation 'com.github.commandiron:SpinWheelCompose:1.1.1'
 }
 ```
 
